@@ -1,7 +1,23 @@
 import moviesData from "../data/movieData.js";
 import uniqid from 'uniqid';
 
-const getAll = () => moviesData.getAll();
+const getAll = async (query = {}) => {
+    let movies = await moviesData.getAll();
+    
+    if (query.search) {
+        movies = movies.filter(movie => movie.title.toLowerCase().includes(query.search.toLowerCase()));
+    };
+
+    if (query.genre) {
+        movies = movies.filter(movie => movie.genre.toLowerCase().includes(query.genre.toLowerCase()));
+    };
+
+    if (query.year) {
+        movies = movies.filter(movie => movie.year === query.year);
+    };
+
+    return movies;
+};
 
 const create = (movieData) => {
     movieData.id = uniqid();

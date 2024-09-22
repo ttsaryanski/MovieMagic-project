@@ -1,15 +1,30 @@
+{{#if isSearch}}
+    <section id="search">
+        <h1>Search</h1>
+        <form method="GET" class="form">
+            <input type="text" class="search" name="search" value="{{query.search}}" placeholder="Title...">
+            <input type="text" name="genre" class="genre" value="{{query.genre}}" placeholder="Genre...">
+            <input type="number" name="year" class="year" value="{{query.year}}" placeholder="Year...">
+            <input type="submit" value="search">
+        </form>
+    </section>
+{{/if}}
+
 <section id="catalog">
+    {{#if isSearch}}
+    {{else}}
     <h1>All Movies</h1>
+    {{/if}}
     <div class="band">
 
         <!-- If there are posts for creature in the database display each of them -->
         {{#each movies}}
-            {{>movie}}
+        {{>movie}}
         {{else}}
-            <!-- If there are still no posts in the database display: -->
-            <div class="no-posts">
-                <p class="no-offer">There are no movies yet...</p>
-            </div>
+        <!-- If there are still no posts in the database display: -->
+        <div class="no-posts">
+            <p class="no-offer">There are no movies yet...</p>
+        </div>
         {{/each}}
 
     </div>
