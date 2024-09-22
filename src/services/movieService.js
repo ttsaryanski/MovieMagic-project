@@ -9,7 +9,15 @@ const create = (movieData) => {
     return moviesData.create(movieData)
 };
 
+const getById = async (movieId) => {
+    const movies = await moviesData.getAll();
+    const result = movies.find(movie => movie.id == movieId);
+
+    return result;
+};
+
 export default {
     getAll,
-    create
+    create,
+    getById
 };
