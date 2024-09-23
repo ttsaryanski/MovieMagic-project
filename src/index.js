@@ -4,7 +4,7 @@ import handlebars from 'express-handlebars';
 import routes from './routes.js';
 
 const app = express();
-const port = 5000;
+const port = 5050;
 
 app.engine('hbs', handlebars.engine({
     extname: 'hbs'
