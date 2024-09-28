@@ -1,8 +1,7 @@
-import moviesData from "../data/movieData.js";
-import uniqid from 'uniqid';
+import Movies from "../models/Movies.js";
 
-const getAll = async (query = {}) => {
-    let movies = await moviesData.getAll();
+const getAll = (query = {}) => {
+    let movies = Movies.find();
     
     if (query.search) {
         movies = movies.filter(movie => movie.title.toLowerCase().startsWith(query.search.toLowerCase()));
@@ -19,19 +18,9 @@ const getAll = async (query = {}) => {
     return movies;
 };
 
-const create = (movieData) => {
-    movieData.id = uniqid();
-    movieData.rating = Number(movieData.rating);
+const create = (movieData) => Movies.create(movieData);
 
-    return moviesData.create(movieData)
-};
-
-const getById = async (movieId) => {
-    const movies = await moviesData.getAll();
-    const result = movies.find(movie => movie.id == movieId);
-
-    return result;
-};
+const getById = (movieId) => Movies.findById(movieId);
 
 export default {
     getAll,

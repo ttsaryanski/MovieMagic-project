@@ -1,10 +1,10 @@
 import { connect } from 'mongoose';
 
-const dbUrl = 'mongodb://localhost:27017/catShelter';
+const dbUrl = 'mongodb://localhost:27017';
 
 export default async function mongooseInit() {
     try {
-        await connect(dbUrl);
+        await connect(dbUrl, { dbName: 'MovieMagic'});
     
         console.log('Successfully connect to DB!');
         
