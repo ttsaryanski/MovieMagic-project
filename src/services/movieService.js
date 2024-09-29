@@ -1,26 +1,26 @@
-import Movies from "../models/Movies.js";
+import Movie from "../models/Movie.js";
 
 const getAll = (query = {}) => {
-    let movies = Movies.find();
+    let movies = Movie.find();
     
     if (query.search) {
-        movies = movies.filter(movie => movie.title.toLowerCase().startsWith(query.search.toLowerCase()));
+        movies.find({ title: { $regex: query.search, $options: 'i' } });
     };
 
     if (query.genre) {
-        movies = movies.filter(movie => movie.genre.toLowerCase().includes(query.genre.toLowerCase()));
+        movies.find({ genre: { $regex: query.genre, $options: 'i' } });
     };
 
     if (query.year) {
-        movies = movies.filter(movie => movie.year === query.year);
+        movies.find({ year: query.year });
     };
 
     return movies;
 };
 
-const create = (movieData) => Movies.create(movieData);
+const create = (movieData) => Movie.create(movieData);
 
-const getById = (movieId) => Movies.findById(movieId);
+const getById = (movieId) => Movie.findById(movieId);
 
 export default {
     getAll,

@@ -10,6 +10,6 @@ const movieShema = new Schema({
     description: String
 });
 
-const Movies = model('Movies', movieShema);
+const Movie = model('Movie', movieShema);
 
-export default Movies;
+export default Movie;

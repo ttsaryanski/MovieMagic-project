@@ -4,7 +4,7 @@ import movieService from '../services/movieService.js';
 const router = Router();
 
 router.get('/', async (req, res) => {
-    const movies = await movieService.getAll().lean();
+    const movies = await movieService.getAll().sort({ year: 'desc'}).lean();
 
     res.render('home', { movies });
 });

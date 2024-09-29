@@ -4,7 +4,7 @@ import movieService from "../services/movieService.js";
 const router = Router();
 
 router.get('/create', (req, res) => {
-    res.render('movies/create')
+    res.render('movie/create')
 });
 
 router.post('/create', async (req, res) => {
@@ -17,7 +17,7 @@ router.post('/create', async (req, res) => {
 
 router.get('/search', async (req, res) => {
     const query = req.query;
-    const movies = await movieService.getAll(query).lean();
+    const movies = await movieService.getAll(query).sort({ year: "desc" }).lean();
 
     res.render('home', { isSearch: true, movies, query });
 });
@@ -28,7 +28,7 @@ router.get('/:movieId', async (req, res) => {
 
     movie.ratingView = ratingViewData(movie.rating);
 
-    res.render('movies/details', { movie })
+    res.render('movie/details', { movie })
 });
 
 function ratingViewData(rating) {
