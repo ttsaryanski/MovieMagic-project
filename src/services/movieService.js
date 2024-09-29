@@ -20,10 +20,15 @@ const getAll = (query = {}) => {
 
 const create = (movieData) => Movie.create(movieData);
 
-const getById = (movieId) => Movie.findById(movieId);
+const getById = (movieId) => Movie.findById(movieId).populate('casts');
+
+const attach = (movieId, castId) => {
+    return Movie.findByIdAndUpdate(movieId, { $push: { casts: castId } });
+};
 
 export default {
     getAll,
     create,
-    getById
+    getById,
+    attach
 };

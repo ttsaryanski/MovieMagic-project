@@ -7,7 +7,11 @@ const movieShema = new Schema({
     year: Number,
     imageUrl: String,
     rating: Number,
-    description: String
+    description: String,
+    casts: [{
+        type: Types.ObjectId,
+        ref: 'Cast'
+    }]
 });
 
 const Movie = model('Movie', movieShema);

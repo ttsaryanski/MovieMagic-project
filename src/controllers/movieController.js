@@ -23,7 +23,7 @@ router.get('/search', async (req, res) => {
     res.render('home', { isSearch: true, movies, query });
 });
 
-router.get('/:movieId', async (req, res) => {
+router.get('/:movieId/details', async (req, res) => {
     const movieId = req.params.movieId;
     const movie = await movieService.getById(movieId).lean();
 
@@ -42,9 +42,12 @@ router.get('/:movieId/attach', async (req, res) => {
 
 router.post('/:movieId/attach', async (req, res) => {
     const movieId = req.params.movieId;
-    const attachData = req.body;
+    const castId = req.body.cast;
 
-    res.redirect('/');
+    await movieService.attach(movieId, castId);
+
+    res.redirect(`/movies/${movieId}/details`);
+
 });
 
 function ratingViewData(rating) {
