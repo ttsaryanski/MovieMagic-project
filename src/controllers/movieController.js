@@ -1,5 +1,6 @@
 import { Router } from "express";
 import movieService from "../services/movieService.js";
+import castService from "../services/castService.js";
 
 const router = Router();
 
@@ -31,8 +32,19 @@ router.get('/:movieId', async (req, res) => {
     res.render('movie/details', { movie })
 });
 
-router.get('/:movieId/attach', (req, res) => {
-    res.render('movie/attach');
+router.get('/:movieId/attach', async (req, res) => {
+    const movieId = req.params.movieId;
+    const movie = await movieService.getById(movieId).lean();
+    const casts = await castService.getAll().lean();
+
+    res.render('movie/attach', { movie, casts });
+});
+
+router.пост('/:movieId/attach', async (req, res) => {
+    const movieId = req.params.movieId;
+    const attachData = req.body;
+
+    res.redirect('/');
 });
 
 function ratingViewData(rating) {
