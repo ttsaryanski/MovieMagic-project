@@ -41,7 +41,7 @@ router.get('/:movieId/attach', async (req, res) => {
 router.post('/:movieId/attach', async (req, res) => {
     const movieId = req.params.movieId;
     const castId = req.body.cast;
-    const characterName = req.body.characterName;
+    const characterName = req.body.charName;
 
     await movieService.attach(movieId, castId, characterName);
 

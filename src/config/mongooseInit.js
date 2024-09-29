@@ -1,10 +1,11 @@
 import { connect } from 'mongoose';
 
-const dbUrl = 'mongodb://localhost:27017';
+const LocalDB_URL = 'mongodb://localhost:27017';
+const CloudDB_URL = process.env.DB_URL;
 
 export default async function mongooseInit() {
     try {
-        await connect(dbUrl, { dbName: 'MovieMagic'});
+        await connect(CloudDB_URL, { dbName: 'MovieMagic'});
     
         console.log('Successfully connect to DB!');
         
