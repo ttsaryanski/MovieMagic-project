@@ -35,8 +35,12 @@ const movieShema = new Schema({
         maxLength: 100
     },
     casts: [{
-        type: Types.ObjectId,
-        ref: 'Cast'
+        _id: false,
+        characterName: String,
+        cast: {
+            type: Types.ObjectId,
+            ref: 'Cast'
+        }
     }]
 });
 
