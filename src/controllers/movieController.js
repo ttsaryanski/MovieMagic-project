@@ -40,7 +40,7 @@ router.get('/:movieId/attach', async (req, res) => {
     res.render('movie/attach', { movie, casts });
 });
 
-router.пост('/:movieId/attach', async (req, res) => {
+router.post('/:movieId/attach', async (req, res) => {
     const movieId = req.params.movieId;
     const attachData = req.body;
 
