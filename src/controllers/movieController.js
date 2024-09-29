@@ -27,8 +27,6 @@ router.get('/:movieId/details', async (req, res) => {
     const movieId = req.params.movieId;
     const movie = await movieService.getById(movieId).lean();
 
-    movie.ratingView = ratingViewData(movie.rating);
-
     res.render('movie/details', { movie })
 });
 
@@ -49,13 +47,5 @@ router.post('/:movieId/attach', async (req, res) => {
     res.redirect(`/movies/${movieId}/details`);
 
 });
-
-function ratingViewData(rating) {
-    if (!Number.isInteger(rating)) {
-        return 'n\\a';
-    };
-
-    return '&#x2605'.repeat(rating);
-}
 
 export default router;
