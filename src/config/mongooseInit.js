@@ -5,7 +5,7 @@ const CloudDB_URL = process.env.DB_URL;
 
 export default async function mongooseInit() {
     try {
-        await connect(CloudDB_URL, { dbName: 'MovieMagic'});
+        await connect(LocalDB_URL, { dbName: 'MovieMagic'});
     
         console.log('Successfully connect to DB!');
         

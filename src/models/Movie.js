@@ -32,10 +32,10 @@ const movieShema = new Schema({
     description: {
         type: String,
         require: true,
-        maxLength: 100
+        maxLength: 500
     },
     casts: [{
-        // _id: false,
+        //_id: false,
         characterName: String,
         cast: {
             type: Types.ObjectId,

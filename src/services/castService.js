@@ -4,7 +4,10 @@ const getAll = () => Cast.find();
 
 const create = (castData) => Cast.create(castData);
 
-const getAllWithout = (castsId) => Cast.find().nin('_id', castsId);
+const getAllWithout = (casts = []) => {
+    const castsId = casts.map(cast => cast.cast._id);
+    return Cast.find({ _id: { $nin: castsId } });
+};
 
 export default {
     getAll,
