@@ -1,6 +1,6 @@
 import { connect } from 'mongoose';
 
-const CloudDB_URL = '${{ secrets.DATABASE_URL }}';
+const CloudDB_URL = process.env.DATABASE_URL;
 
 export default async function mongooseInit() {
     try {
