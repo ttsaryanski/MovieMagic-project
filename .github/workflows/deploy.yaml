@@ -3,7 +3,7 @@ name: Deploy Application
 on:
   push:
     branches:
-      - main  # Работният поток ще се стартира при push в главния клон
+      - main
 
 jobs:
   deploy:
@@ -11,17 +11,17 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2  # Клонира репозиторито
+        uses: actions/checkout@v2
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'  # Настройка на Node.js
+          node-version: '14'
 
       - name: Install dependencies
-        run: npm install  # Инсталиране на зависимостите
+        run: npm install
 
       - name: Deploy to production
         env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}  # Взима тайната от GitHub Secrets
-        run: npm run deploy  # Изпълнение на deploy скрипта
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: npm run deploy
