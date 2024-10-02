@@ -1,6 +1,6 @@
 import { connect } from 'mongoose';
 
-const CloudDB_URL = process.env.DATABASE_URL;
+const CloudDB_URL = 'mongodb+srv://SoftUniUser:SoftUniBackEndSeptember2024@softuni.a3ekn.mongodb.net/';
 
 export default async function mongooseInit() {
     try {
