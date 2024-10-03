@@ -19,8 +19,12 @@
 
                 <p class="disc">Description: {{movie.description}}</p>
             </div>
+            <div class="details-btn">
+                <a href="/movies/{{movie._id}}/attach" id="attach-button">Attach</a>
+                <button id="edit-button">Edit</button>
+                <button id="delete-button">Delete</button>
+            </div>
 
-            <a href="/movies/{{movie._id}}/attach" class="details">Attach</a>
 
         </div>
         <div class="card_right">
