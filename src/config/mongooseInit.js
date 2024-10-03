@@ -5,7 +5,7 @@ const CloudDB_URL = 'mongodb+srv://SoftUniUser:SoftUniBackEndSeptember2024@softu
 
 export default async function mongooseInit() {
     try {
-        await connect(CloudDB_URL, { dbName: 'MovieMagic'});
+        await connect(LocalDB_URL, { dbName: 'MovieMagic'});
     
         console.log('Successfully connect to DB!');
         

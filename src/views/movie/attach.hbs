@@ -6,7 +6,7 @@
             <img class="movie" src="{{movie.imageUrl}}" alt="{{movie.title}}">
             <form method="POST">
                 <label for="cast">Cast</label>
-                <input type="text" name="charName" placeholder="character name">
+                <input type="text" class="inputFields" name="charName" placeholder="character name">
                 <select id="cast" name="cast">
                     <option value="#" selected>--------</option>
                     {{#each casts}}
