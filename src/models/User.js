@@ -5,9 +5,7 @@ const SALT_ROUNDS = 10;
 
 const userShema = new Schema({
     email: String,
-    password: {
-        type: String
-    }
+    password: String
 });
 
 userShema.pre('save', async function () {
