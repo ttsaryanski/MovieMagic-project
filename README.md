@@ -2,4 +2,4 @@
 
 This project is part of the course JS BackEnd of SoftUni!
 
-<!-- Set connect to CloudDB_URL in config/mongooseInit for testing! -->
+CloudDB_URL and SECRET are visible to the test functionality!!!
