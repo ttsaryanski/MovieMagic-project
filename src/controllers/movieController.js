@@ -55,9 +55,25 @@ router.post('/:movieId/attach', async (req, res) => {
 router.get('/:movieId/delete', async (req, res) => {
     const movieId = req.params.movieId;
 
-    await movieService.removeById(movieId);
+    await movieService.remove(movieId);
 
     res.redirect('/');
+});
+
+router.get('/:movieId/edit', async (req, res) => {
+    const movieId = req.params.movieId;
+    const movie = await movieService.getById(movieId).lean();
+
+    res.render('movie/edit', { movie });
+});
+
+router.post('/:movieId/edit', async (req, res) => {
+    const movieId = req.params.movieId;
+    const movieData = req.body;
+
+    await movieService.edit(movieId, movieData).lean();
+
+    res.redirect(`/movies/${movieId}/details`);
 });
 
 export default router;

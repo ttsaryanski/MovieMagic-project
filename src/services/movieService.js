@@ -22,7 +22,9 @@ const create = (movieData, ownerId) => Movie.create({...movieData, owner: ownerI
 
 const getById = (movieId) => Movie.findById(movieId).populate('casts.cast');
 
-const removeById = (movieId) => Movie.findByIdAndDelete(movieId);
+const remove = (movieId) => Movie.findByIdAndDelete(movieId);
+
+const edit = (movieId, movieData) => Movie.findByIdAndUpdate(movieId, movieData);
 
 const attach = (movieId, castId, characterName) => {
     return Movie.findByIdAndUpdate(movieId, { $push: { casts: { cast: castId, characterName } } });
@@ -32,6 +34,7 @@ export default {
     getAll,
     create,
     getById,
-    removeById,
+    remove,
+    edit,
     attach
 };
