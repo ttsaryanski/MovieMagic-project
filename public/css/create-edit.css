@@ -81,6 +81,7 @@ input[type=number]::-webkit-outer-spin-button {
   padding: 10px 43px;
   cursor: pointer;
   transition: 0.4s;
+  margin-bottom: 20px;
   margin-right: 50px;
   font-weight: bold;
 }

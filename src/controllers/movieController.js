@@ -71,7 +71,7 @@ router.post('/:movieId/edit', async (req, res) => {
     const movieId = req.params.movieId;
     const movieData = req.body;
 
-    await movieService.edit(movieId, movieData).lean();
+    await movieService.edit(movieId, movieData);
 
     res.redirect(`/movies/${movieId}/details`);
 });
