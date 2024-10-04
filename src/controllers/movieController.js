@@ -28,9 +28,9 @@ router.get('/:movieId/details', async (req, res) => {
     const movieId = req.params.movieId;
     const movie = await movieService.getById(movieId).lean();
 
-    //const isOwner = req.user?._id == movie.
+    const isOwner = req.user?._id == movie.owner;
 
-    res.render('movie/details', { movie })
+    res.render('movie/details', { movie, isOwner })
 });
 
 router.get('/:movieId/attach', async (req, res) => {
