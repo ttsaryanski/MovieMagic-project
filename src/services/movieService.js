@@ -18,7 +18,7 @@ const getAll = (query = {}) => {
     return movies;
 };
 
-const create = (movieData) => Movie.create(movieData);
+const create = (movieData, ownerId) => Movie.create({...movieData, owner: ownerId});
 
 const getById = (movieId) => Movie.findById(movieId).populate('casts.cast');
 
