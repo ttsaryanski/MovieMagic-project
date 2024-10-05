@@ -1,7 +1,7 @@
-import jwt from 'jsonwebtoken';
+import jwt from '../lib/jwt.js';
 import { JWT_SECRET } from '../config/constans.js';
 
-const authMiddleware = (req, res, next) => {
+const authMiddleware = async (req, res, next) => {
     const token = req.cookies['auth'];
 
     if (!token) {
@@ -9,7 +9,7 @@ const authMiddleware = (req, res, next) => {
     };
 
     try {
-        const decodedToken = jwt.verify(token, JWT_SECRET);
+        const decodedToken = await jwt.verify(token, JWT_SECRET);
 
         const user = {
             _id: decodedToken._id,
