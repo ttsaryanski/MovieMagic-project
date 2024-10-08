@@ -24,10 +24,10 @@ const getById = (movieId) => Movie.findById(movieId).populate('casts.cast');
 
 const remove = (movieId) => Movie.findByIdAndDelete(movieId);
 
-const edit = (movieId, movieData) => Movie.findByIdAndUpdate(movieId, movieData);
+const edit = (movieId, movieData) => Movie.findByIdAndUpdate(movieId, movieData, { runValidators: true });
 
 const attach = (movieId, castId, characterName) => {
-    return Movie.findByIdAndUpdate(movieId, { $push: { casts: { cast: castId, characterName } } });
+    return Movie.findByIdAndUpdate(movieId, { $push: { casts: { cast: castId, characterName } } }, { runValidators: true });
 };
 
 export default {

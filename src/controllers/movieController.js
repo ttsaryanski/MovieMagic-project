@@ -2,6 +2,7 @@ import { Router } from "express";
 import movieService from "../services/movieService.js";
 import castService from "../services/castService.js";
 import { isAuth } from "../middlewares/authMiddleware.js";
+import { creatErrorMsg } from "../utils/errorUtil.js";
 
 const router = Router();
 
@@ -13,7 +14,13 @@ router.post('/create', isAuth, async (req, res) => {
     const movieData = req.body;
     const ownerId = req.user?._id;
 
-    await movieService.create(movieData, ownerId);
+    try {
+        await movieService.create(movieData, ownerId);
+    } catch (error) {
+        const errorMsg = creatErrorMsg(error);
+
+        return res.render('movie/create', { error: errorMsg, movie: movieData });
+    }
 
     res.redirect('/');
 });
@@ -44,10 +51,18 @@ router.get('/:movieId/attach', isAuth,  async (req, res) => {
 
 router.post('/:movieId/attach', isAuth,  async (req, res) => {
     const movieId = req.params.movieId;
+    const movie = await movieService.getById(movieId).lean();
+    const casts = await castService.getAllWithout(movie.casts).lean();
     const castId = req.body.cast;
     const characterName = req.body.charName;
 
-    await movieService.attach(movieId, castId, characterName);
+    try {
+        await movieService.attach(movieId, castId, characterName);
+    } catch (error) { 
+        const errorMsg = creatErrorMsg(error);
+
+        return res.render('movie/attach', { error: errorMsg, movie, casts, characterName })
+    }
 
     res.redirect(`/movies/${movieId}/details`);
 
@@ -72,7 +87,13 @@ router.post('/:movieId/edit', isAuth, async (req, res) => {
     const movieId = req.params.movieId;
     const movieData = req.body;
 
-    await movieService.edit(movieId, movieData);
+    try {
+        await movieService.edit(movieId, movieData); 
+    } catch (error) {
+        const errorMsg = creatErrorMsg(error);
+
+        return res.render('movie/edit', { error: errorMsg, movie: movieData });
+    }
 
     res.redirect(`/movies/${movieId}/details`);
 });

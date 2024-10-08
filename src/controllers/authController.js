@@ -13,8 +13,7 @@ router.post('/register', async (req, res) => {
     const { email, password, rePassword } = req.body;
 
     if (rePassword !== password) {
-        const errorMsg = 'Password missmatch!';
-        return res.render('auth/register', { email, error: errorMsg });
+        return res.render('auth/register', { email, error: 'Password missmatch!' });
     }
 
     try {
