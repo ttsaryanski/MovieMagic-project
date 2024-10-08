@@ -1,5 +1,7 @@
 import { Router } from "express";
+
 import authService from "../services/authService.js";
+import { creatErrorMsg } from "../utils/errorUtil.js";
 
 const router = Router();
 
@@ -8,9 +10,18 @@ router.get('/register', (req, res) => {
 });
 
 router.post('/register', async (req, res) => {
-    const { email, password, rePasword } = req.body;
+    const { email, password, rePassword } = req.body;
 
-    await authService.register(email, password);
+    if (rePassword !== password) {
+        const errorMsg = 'Password missmatch!';
+        return res.render('auth/register', { email, error: errorMsg });
+    }
+
+    try {
+        await authService.register(email, password);
+    } catch (error) {
+        return res.render('auth/register', { email, error: creatErrorMsg(error) });       
+    };
 
     const token = await authService.login(email, password);
     res.cookie('auth', token, { httpOnly: true });
@@ -25,8 +36,12 @@ router.get('/login', (req, res) => {
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
-    const token = await authService.login(email, password);
-    res.cookie('auth', token, { httpOnly: true });
+    try {
+        const token = await authService.login(email, password);   
+        res.cookie('auth', token, { httpOnly: true });
+    } catch (error) {
+        return res.render('auth/login', { email, error: creatErrorMsg(error) });
+    }
 
     res.redirect('/');
 });
