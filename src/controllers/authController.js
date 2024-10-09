@@ -22,8 +22,12 @@ router.post('/register', async (req, res) => {
         return res.render('auth/register', { email, error: createErrorMsg(error) });       
     };
 
-    const token = await authService.login(email, password);
-    res.cookie('auth', token, { httpOnly: true });
+    try {
+        const token = await authService.login(email, password);   
+        res.cookie('auth', token, { httpOnly: true });
+    } catch (error) {
+        return res.render('auth/login', { email, error: createErrorMsg(error) });
+    }
 
     res.redirect('/');
 });

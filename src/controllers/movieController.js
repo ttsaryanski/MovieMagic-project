@@ -17,9 +17,7 @@ router.post('/create', isAuth, async (req, res) => {
     try {
         await movieService.create(movieData, ownerId);
     } catch (error) {
-        const errorMsg = createErrorMsg(error);
-
-        return res.render('movie/create', { error: errorMsg, movie: movieData });
+        return res.render('movie/create', { error: createErrorMsg(error), movie: movieData });
     }
 
     res.redirect('/');
@@ -33,7 +31,7 @@ router.get('/search', async (req, res) => {
     
         res.render('home', { isSearch: true, movies, query }); 
     } catch (error) {
-        res.render('home', { isSearch: true, error: createErrorMsg(error)});
+        return res.render('home', { isSearch: true, error: createErrorMsg(error)});
     }
 });
 
@@ -46,7 +44,7 @@ router.get('/:movieId/details', async (req, res) => {
     
         res.render('movie/details', { movie, isOwner });   
     } catch (error) {
-        res.render('movie/details', { error: createErrorMsg(error)});
+        return res.render('movie/details', { error: createErrorMsg(error)});
     }
 });
 
@@ -59,7 +57,7 @@ router.get('/:movieId/attach', isAuth,  async (req, res) => {
     
         res.render('movie/attach', { movie, casts });   
     } catch (error) {
-        res.render('movie/attach', { error: createErrorMsg(error)});
+        return res.render('movie/attach', { error: createErrorMsg(error)});
     }
 });
 
@@ -87,12 +85,11 @@ router.get('/:movieId/delete', isAuth,  async (req, res) => {
 
     try {
         await movieService.remove(movieId);
-
-        res.redirect('/');
     } catch (error) {
-        res.render(`/movies/${movieId}/details`, { error: createErrorMsg(error)});
+        return res.render('404', { error: createErrorMsg(error)});
     }
     
+    res.redirect('/');
 });
 
 router.get('/:movieId/edit', isAuth, async (req, res) => {
@@ -103,7 +100,7 @@ router.get('/:movieId/edit', isAuth, async (req, res) => {
 
         res.render('movie/edit', { movie });
     } catch (error) {
-        res.render('movie/edit', { error: createErrorMsg(error)});
+        return res.render('404', { error: createErrorMsg(error)});
     }
     
 });

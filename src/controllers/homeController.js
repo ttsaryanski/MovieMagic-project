@@ -10,9 +10,7 @@ router.get('/', async (req, res) => {
         
         res.render('home', { movies });
     } catch (error) {
-        console.log(error);
-        
-        res.render('home', { error: createErrorMsg(error) });
+        return res.render('home', { error: createErrorMsg(error) });
     }
 
 });

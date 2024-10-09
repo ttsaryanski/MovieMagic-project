@@ -7,5 +7,5 @@ export default function expressInit(app) {
     app.use(express.urlencoded({ extended: false }));
     app.use(express.static('public'));
     app.use(cookieParser());
-    app.use(authMiddleware)
+    app.use(authMiddleware);
 };

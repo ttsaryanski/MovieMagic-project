@@ -8,7 +8,7 @@ import { JWT_SECRET } from '../config/constans.js';
 const register = async (email, password) => {
     const user = await User.findOne({ email });
     if (user) {
-        throw new Error('User already exists') ;
+        throw new Error('User already exists!') ;
     }
 
     return User.create({ email, password });
