@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import authService from "../services/authService.js";
-import { creatErrorMsg } from "../utils/errorUtil.js";
+import { createErrorMsg } from "../utils/errorUtil.js";
 
 const router = Router();
 
@@ -19,7 +19,7 @@ router.post('/register', async (req, res) => {
     try {
         await authService.register(email, password);
     } catch (error) {
-        return res.render('auth/register', { email, error: creatErrorMsg(error) });       
+        return res.render('auth/register', { email, error: createErrorMsg(error) });       
     };
 
     const token = await authService.login(email, password);
@@ -39,7 +39,7 @@ router.post('/login', async (req, res) => {
         const token = await authService.login(email, password);   
         res.cookie('auth', token, { httpOnly: true });
     } catch (error) {
-        return res.render('auth/login', { email, error: creatErrorMsg(error) });
+        return res.render('auth/login', { email, error: createErrorMsg(error) });
     }
 
     res.redirect('/');

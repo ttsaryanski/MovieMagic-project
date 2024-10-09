@@ -1,6 +1,6 @@
 import { Router } from "express";
 import castService from "../services/castService.js";
-import { creatErrorMsg } from "../utils/errorUtil.js";
+import { createErrorMsg } from "../utils/errorUtil.js";
 
 const router = Router();
 
@@ -14,7 +14,7 @@ router.post('/create', async (req, res) => {
     try {
         await castService.create(castData);
     } catch (error) {
-        const errorMsg = creatErrorMsg(error);
+        const errorMsg = createErrorMsg(error);
 
         return res.render('cast/create', { error: errorMsg, cast: castData })
     }

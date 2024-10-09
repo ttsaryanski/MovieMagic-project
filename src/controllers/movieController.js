@@ -2,7 +2,7 @@ import { Router } from "express";
 import movieService from "../services/movieService.js";
 import castService from "../services/castService.js";
 import { isAuth } from "../middlewares/authMiddleware.js";
-import { creatErrorMsg } from "../utils/errorUtil.js";
+import { createErrorMsg } from "../utils/errorUtil.js";
 
 const router = Router();
 
@@ -17,7 +17,7 @@ router.post('/create', isAuth, async (req, res) => {
     try {
         await movieService.create(movieData, ownerId);
     } catch (error) {
-        const errorMsg = creatErrorMsg(error);
+        const errorMsg = createErrorMsg(error);
 
         return res.render('movie/create', { error: errorMsg, movie: movieData });
     }
@@ -27,26 +27,40 @@ router.post('/create', isAuth, async (req, res) => {
 
 router.get('/search', async (req, res) => {
     const query = req.query;
-    const movies = await movieService.getAll(query).sort({ year: "desc" }).lean();
 
-    res.render('home', { isSearch: true, movies, query });
+    try {
+        const movies = await movieService.getAll(query).sort({ year: "desc" }).lean();
+    
+        res.render('home', { isSearch: true, movies, query }); 
+    } catch (error) {
+        res.render('home', { isSearch: true, error: createErrorMsg(error)});
+    }
 });
 
 router.get('/:movieId/details', async (req, res) => {
     const movieId = req.params.movieId;
-    const movie = await movieService.getById(movieId).lean();
 
-    const isOwner = movie.owner && movie.owner == req.user?._id;
-
-    res.render('movie/details', { movie, isOwner })
+    try {
+        const movie = await movieService.getById(movieId).lean();
+        const isOwner = movie.owner && movie.owner == req.user?._id;
+    
+        res.render('movie/details', { movie, isOwner });   
+    } catch (error) {
+        res.render('movie/details', { error: createErrorMsg(error)});
+    }
 });
 
 router.get('/:movieId/attach', isAuth,  async (req, res) => {
     const movieId = req.params.movieId;
-    const movie = await movieService.getById(movieId).lean();
-    const casts = await castService.getAllWithout(movie.casts).lean();
 
-    res.render('movie/attach', { movie, casts });
+    try {
+        const movie = await movieService.getById(movieId).lean();
+        const casts = await castService.getAllWithout(movie.casts).lean();
+    
+        res.render('movie/attach', { movie, casts });   
+    } catch (error) {
+        res.render('movie/attach', { error: createErrorMsg(error)});
+    }
 });
 
 router.post('/:movieId/attach', isAuth,  async (req, res) => {
@@ -59,7 +73,7 @@ router.post('/:movieId/attach', isAuth,  async (req, res) => {
     try {
         await movieService.attach(movieId, castId, characterName);
     } catch (error) { 
-        const errorMsg = creatErrorMsg(error);
+        const errorMsg = createErrorMsg(error);
 
         return res.render('movie/attach', { error: errorMsg, movie, casts, characterName })
     }
@@ -71,16 +85,27 @@ router.post('/:movieId/attach', isAuth,  async (req, res) => {
 router.get('/:movieId/delete', isAuth,  async (req, res) => {
     const movieId = req.params.movieId;
 
-    await movieService.remove(movieId);
+    try {
+        await movieService.remove(movieId);
 
-    res.redirect('/');
+        res.redirect('/');
+    } catch (error) {
+        res.render(`/movies/${movieId}/details`, { error: createErrorMsg(error)});
+    }
+    
 });
 
 router.get('/:movieId/edit', isAuth, async (req, res) => {
     const movieId = req.params.movieId;
-    const movie = await movieService.getById(movieId).lean();
 
-    res.render('movie/edit', { movie });
+    try {
+        const movie = await movieService.getById(movieId).lean();
+
+        res.render('movie/edit', { movie });
+    } catch (error) {
+        res.render('movie/edit', { error: createErrorMsg(error)});
+    }
+    
 });
 
 router.post('/:movieId/edit', isAuth, async (req, res) => {
@@ -90,7 +115,7 @@ router.post('/:movieId/edit', isAuth, async (req, res) => {
     try {
         await movieService.edit(movieId, movieData); 
     } catch (error) {
-        const errorMsg = creatErrorMsg(error);
+        const errorMsg = createErrorMsg(error);
 
         return res.render('movie/edit', { error: errorMsg, movie: movieData });
     }
