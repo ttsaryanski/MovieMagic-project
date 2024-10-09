@@ -6,8 +6,8 @@ import { JWT_SECRET } from '../config/constans.js';
 
 
 const register = (email, password) => {
-    const user = User.findOne({ email });
-    if (user) {
+    const count = User.countDocuments({ email });
+    if (count > 0) {
         throw new Error('User already exists') ;
     }
 
