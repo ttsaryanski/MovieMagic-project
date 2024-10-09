@@ -5,15 +5,9 @@ import User from "../models/User.js";
 import { JWT_SECRET } from '../config/constans.js';
 
 
-<<<<<<< HEAD
 const register = async (email, password) => {
     const user = await User.findOne({ email });
     if (user) {
-=======
-const register = (email, password) => {
-    const count = User.countDocuments({ email });
-    if (count > 0) {
->>>>>>> cc6343f48ac6b9a9675b55ea034581811f5b8565
         throw new Error('User already exists') ;
     }
 
@@ -22,7 +16,7 @@ const register = (email, password) => {
 
 const login = async (email, password) => {
     const user = await User.findOne({ email });
-    
+
     if (!user) {
         throw new Error('User does not exist!');
     };
