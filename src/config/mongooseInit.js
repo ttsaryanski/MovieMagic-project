@@ -1,7 +1,6 @@
 import { connect } from 'mongoose';
 
-const LocalDB_URL = 'mongodb://localhost:27017/';
-const CloudDB_URL = 'mongodb+srv://SoftUniUser:SoftUniBackEndSeptember2024@softuni.a3ekn.mongodb.net/';
+import { LocalDB_URL, CloudDB_URL } from './constans.js';
 
 export default async function mongooseInit() {
     try {

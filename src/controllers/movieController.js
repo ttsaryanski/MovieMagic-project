@@ -2,6 +2,7 @@ import { Router } from "express";
 import movieService from "../services/movieService.js";
 import castService from "../services/castService.js";
 import { isAuth } from "../middlewares/authMiddleware.js";
+import { checkOwner, checkNotOwner } from '../middlewares/ownerMiddleware.js';
 import { createErrorMsg } from "../utils/errorUtil.js";
 
 const router = Router();
@@ -16,11 +17,11 @@ router.post('/create', isAuth, async (req, res) => {
 
     try {
         await movieService.create(movieData, ownerId);
+
+        res.redirect('/');
     } catch (error) {
         return res.render('movie/create', { error: createErrorMsg(error), movie: movieData });
     }
-
-    res.redirect('/');
 });
 
 router.get('/search', async (req, res) => {
@@ -80,19 +81,19 @@ router.post('/:movieId/attach', isAuth,  async (req, res) => {
 
 });
 
-router.get('/:movieId/delete', isAuth,  async (req, res) => {
+router.get('/:movieId/delete', isAuth, checkOwner,  async (req, res) => {
     const movieId = req.params.movieId;
 
     try {
         await movieService.remove(movieId);
+
+        res.redirect('/');
     } catch (error) {
         return res.render('404', { error: createErrorMsg(error)});
     }
-    
-    res.redirect('/');
 });
 
-router.get('/:movieId/edit', isAuth, async (req, res) => {
+router.get('/:movieId/edit', isAuth, checkOwner, async (req, res) => {
     const movieId = req.params.movieId;
 
     try {
@@ -105,19 +106,19 @@ router.get('/:movieId/edit', isAuth, async (req, res) => {
     
 });
 
-router.post('/:movieId/edit', isAuth, async (req, res) => {
+router.post('/:movieId/edit', isAuth, checkOwner, async (req, res) => {
     const movieId = req.params.movieId;
     const movieData = req.body;
 
     try {
-        await movieService.edit(movieId, movieData); 
+        await movieService.edit(movieId, movieData);
+
+        res.redirect(`/movies/${movieId}/details`);
     } catch (error) {
         const errorMsg = createErrorMsg(error);
 
         return res.render('movie/edit', { error: errorMsg, movie: movieData });
     }
-
-    res.redirect(`/movies/${movieId}/details`);
 });
 
 export default router;

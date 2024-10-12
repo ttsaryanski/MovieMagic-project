@@ -2,4 +2,4 @@
 
 This project is part of the course JS BackEnd of SoftUni!
 
-CloudDB_URL and SECRET are visible to the test functionality!!!
+The information found in constans.js is visible for the purpose of testing the application!!!

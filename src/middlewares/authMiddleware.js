@@ -39,7 +39,16 @@ const isAuth = (req, res, next) => {
     return next();
 };
 
+const isGuest = (req, res, next) => {
+    if (!req.isAuthenticated) {
+        return next();
+    }
+
+    return res.render('home', { error: 'You are already registered and logged!'});
+}
+
 export {
     authMiddleware,
-    isAuth
+    isAuth,
+    isGuest
 };

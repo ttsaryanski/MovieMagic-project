@@ -12,7 +12,6 @@ router.get('/', async (req, res) => {
     } catch (error) {
         return res.render('home', { error: createErrorMsg(error) });
     }
-
 });
 
 router.get('/about', (req, res) => {

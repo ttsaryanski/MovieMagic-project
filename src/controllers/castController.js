@@ -13,13 +13,13 @@ router.post('/create', async (req, res) => {
 
     try {
         await castService.create(castData);
+
+        res.redirect('/');
     } catch (error) {
         const errorMsg = createErrorMsg(error);
 
         return res.render('cast/create', { error: errorMsg, cast: castData })
     }
-
-    res.redirect('/');
 });
 
 export default router;

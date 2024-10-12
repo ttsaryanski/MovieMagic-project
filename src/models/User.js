@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
 import bcrypt from 'bcrypt';
 
-const SALT_ROUNDS = 10;
+import { SALT_ROUNDS } from "../config/constans.js";
 
 const userShema = new Schema({
     email: {
